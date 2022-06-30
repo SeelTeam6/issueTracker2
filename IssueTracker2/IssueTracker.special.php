@@ -14,7 +14,7 @@ class SpecialIssueTracker extends SpecialPage {
 
 		# Do stuff
 		# ...
-		$wikitext = 'Hello world!';
-		$output->addWikiText( $wikitext );
+		$wikitext = '{{#issue: }}';
+		$output->addWikiTextAsInterface( $wikitext );
 	}
 }
