@@ -30,12 +30,13 @@ class IssueTrackerActionArchive extends IssueTrackerAction
 	 */
 	public function archiveAction()
 	{
-		global $wgUser, $wgScript, $wgRequest;
+		global $wgScript, $wgRequest;
+		$UserVar = RequestContext::getMain()->getUser();
 		
 		$listUrl = $wgScript . '?title=' . $this->getNamespace('dbKey') . '&bt_action=list';
 		
-		$userId = $wgUser->getID();
-		$userName = $wgUser->getName();
+		$userId = $UserVar->getID();
+		$userName = $UserVar->getName();
 		
 		$issueId = $wgRequest->getText('bt_issueid');
 		$this->getModel('default')->archiveIssue($issueId);
