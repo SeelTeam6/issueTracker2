@@ -128,8 +128,8 @@ abstract class IssueTrackerAction extends ArrayObject
 	 */
 	public function hasPermission($action)
 	{
-		global $wgUser;
-		return $wgUser->isAllowed('issuetracker-' . $action);
+		$UserVar = RequestContext::getMain()->getUser();
+		return $UserVar->isAllowed('issuetracker-' . $action);
 	}    
 	
 	/**
