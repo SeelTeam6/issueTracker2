@@ -21,7 +21,7 @@ abstract class IssueTrackerModel
 	 *
 	 * @param int $db
 	 */
-	public function __construct($db = DB_SLAVE)
+	public function __construct($db = DB_PRIMARY)
 	{
 		$this->_dbr = wfGetDB($db);
 	}
