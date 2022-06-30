@@ -17,4 +17,4 @@ features:
 
 
 
-https://www.mediawiki.org/wiki/Extension:IssueTracker_2.0
+https://www.mediawiki.org/wiki/Extension:IssueTracker2
