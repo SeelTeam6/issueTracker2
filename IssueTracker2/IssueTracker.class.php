@@ -211,7 +211,7 @@ class IssueTracker {
 	{
 		$options = extractOptions( array_slice(func_get_args(), 1) );
 
-		$parser->disableCache();
+		$parser->getOutput()->updateCacheExpiry(0);
 
 		// Set the page namespace
 		$namespace['dbKey'] = $parser->getTitle()->getPrefixedDBkey();
