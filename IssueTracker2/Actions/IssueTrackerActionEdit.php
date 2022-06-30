@@ -20,7 +20,7 @@ class IssueTrackerActionEdit extends IssueTrackerActionAdd
 	 */
 	public function editAction()
 	{
-		global $wgUser;
+		$UserVar = RequestContext::getMain()->getUser();
 		
 		$this->_setDefaultVars();
 		$this->_setHookPreferences();
@@ -28,8 +28,8 @@ class IssueTrackerActionEdit extends IssueTrackerActionAdd
 		if (isset($_POST['bt_submit']) && $this->issueId !== 0) {
 			$errorMessages = $this->_getErrors($this->_requiredFields);	
 			if (count($errorMessages) == 0) {
-				$userId = $wgUser->getID();
-				$userName = $wgUser->getName();
+				$userId = $UserVar->getID();
+				$userName = $UserVar->getName();
 				$result = $this->getModel('default')->updateIssue($this->issueId, $_POST);
 				header('Location: ' . $this->listUrl);
 			} else {
