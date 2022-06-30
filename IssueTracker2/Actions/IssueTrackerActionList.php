@@ -21,12 +21,13 @@ class IssueTrackerActionList extends IssueTrackerAction
 	public function listAction()
 	{
 		// Mediawiki globals
-		global $wgUser, $wgRequest;
+		global $wgRequest;
+		$UserVar = RequestContext::getMain()->getUser();
 		
 		$this->_setDefaultVars();
 		$this->_setHookPreferences();
 
-		// Conditions par défaut
+		// Conditions par dÃ©faut
 		if ($this->project != "*") $conds['project_name'] = addslashes($this->project);
 		$conds['deleted'] = 0;
 		if ($this->id !== "*") $conds['issue_id'] = $this->id;
@@ -36,7 +37,7 @@ class IssueTrackerActionList extends IssueTrackerAction
 			$filterByOptions = array('assined_to_me'=>'assignee', 'reported_by_me'=>'user_name');
 			if (array_key_exists($this->filterBy, $filterByOptions)) {
 				$filterField = $filterByOptions[$this->filterBy];
-				$conds[$filterField] = $wgUser->getName();
+				$conds[$filterField] = $UserVar->getName();
 			}
 		}
 
@@ -68,7 +69,8 @@ class IssueTrackerActionList extends IssueTrackerAction
 	protected function _setDefaultVars()
 	{
 		// Mediawiki globals
-		global $wgScript, $wgUser, $wgRequest;
+		global $wgScript, $wgRequest;
+		$UserVar = RequestContext::getMain()->getUser();
 		
 		$this->action         = $this->getAction();
 		$this->pageKey        = $this->getNamespace('dbKey');
@@ -81,8 +83,8 @@ class IssueTrackerActionList extends IssueTrackerAction
 		$this->urlpage		  = $wgScript . '?title=';
 		$this->editUrl        = $this->url . 'edit&bt_issueid=';
 		$this->deleteUrl      = $this->url . 'archive&bt_issueid=';
-		$this->isLoggedIn     = $wgUser->isLoggedIn();
-		$this->isAllowed      = $wgUser->isAllowed('protect');
+		$this->isLoggedIn     = $UserVar->isRegistered();
+		$this->isAllowed      = $UserVar->isAllowed('protect');
 		$this->hasDeletePerms = $this->hasPermission('delete');
 		$this->hasEditPerms   = $this->hasPermission('edit');
 		$this->hasViewPerms   = $this->hasPermission('view');
