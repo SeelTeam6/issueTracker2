@@ -2,6 +2,11 @@
 /** @see IssueTrackerAction **/
 require_once dirname(__FILE__) . '/IssueTrackerAction.php';
 
+use MediaWiki\Cache\LinkBatchFactory;
+use MediaWiki\User\UserGroupManager;
+use Wikimedia\Rdbms\ILoadBalancer;
+use MediaWiki\MediaWikiServices;
+
 /**
  * IssueTrackerActionAdd class.
  *
@@ -36,7 +41,8 @@ class IssueTrackerActionAdd extends IssueTrackerAction
 	 */
 	public function addAction()
 	{
-		global $wgScript, $wgUser;
+		global $wgScript;
+		$UserVar = RequestContext::getMain()->getUser();
 		
 		$this->_setDefaultVars();
 		$this->_setHookPreferences();
@@ -44,8 +50,8 @@ class IssueTrackerActionAdd extends IssueTrackerAction
 		if (isset($_POST['bt_submit'])) {
 			$errorMessages = $this->_getErrors($this->_requiredFields);	
 			if (count($errorMessages) == 0) {
-				$userId = $wgUser->getID();
-				$userName = $wgUser->getName();
+				$userId = $UserVar->getID();
+				$userName = $UserVar->getName();
 				$this->getModel('default')->addIssue($_POST, $userId, $userName);
 				header('Location: ' . $this->listUrl);
 			} else {
@@ -118,8 +124,8 @@ class IssueTrackerActionAdd extends IssueTrackerAction
 		
 		/** @see SpecialListusers **/
 		require_once( $IP."/includes/specials/SpecialListusers.php") ;
-		$specialListUsers = new SpecialListUsers();
-		$users = new UsersPager($specialListUsers->getContext());
+		$specialListUsers = new SpecialListUsers( MediaWikiServices::getInstance()->getLinkBatchFactory(), MediaWikiServices::getInstance()->getDBLoadBalancer(), MediaWikiServices::getInstance()->getuserGroupManager() );
+		$users = new UsersPager($specialListUsers->getContext(), MediaWikiServices::getInstance()->getHookContainer(), MediaWikiServices::getInstance()->getLinkBatchFactory(), MediaWikiServices::getInstance()->getDBLoadBalancer(), MediaWikiServices::getInstance()->getuserGroupManager(), null, null);
 		if (! $users->mQueryDone) {
 		  $users->doQuery();
 		}
