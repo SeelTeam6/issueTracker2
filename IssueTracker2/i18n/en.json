@@ -2,11 +2,11 @@
 	"@metadata": {
 		"authors": [
 			"Erick Corona"
+			"SeelTeam6"
 		]
 	},
-	"myextension": "My Extension",
-	"myextension-desc": "Adds the MyExtension functionality.",
-	"myextension-summary": "On this special page, do this simple thing and earn wonders.",
+	"issuetracker-desc": "Adds an Issue Tracker",
+	"issuetracker-summary": "On this special page, view the Issue Tracker",
 	"interwiki": "Wikienväliset linkit",
 	"issuetracker" : "IssueTracker",
 	"view_issues" : "View Issues",
@@ -16,7 +16,7 @@
 	"edit" : "edit",
 	"delete" : "delete",
 	"archive" : "Archive",
-	"archived" : "Archivé",
+	"archived" : "Archived",
 	"view" : "view",
 	"id'" : "ID",
 	"search" : "Search",
