@@ -222,8 +222,8 @@ abstract class IssueTrackerAction extends ArrayObject
 	 */
 	public function isLoggedIn()
 	{
-		global $wgUser;
-		return $wgUser->isLoggedIn();
+		$UserVar = RequestContext::getMain()->getUser();
+		return $UserVar->isRegistered();
 	}
 	
 	/**
